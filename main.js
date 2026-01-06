@@ -50,7 +50,7 @@ function renderPage(page){
     card.className='post-card';
 
     const title=document.createElement('a');
-    title.href=`post/${post.filename.replace('.md','.html')}`;
+    title.href = `post/post-template.html?file=${post.filename}`;
     title.className='post-title';
     title.textContent=post.title;
 
