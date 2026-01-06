@@ -1,20 +1,10 @@
-/* ========================================================
-   기본 설정
-======================================================== */
 html, body {
-  height: 100%; /* 화면 전체 높이 확보 */
+  height: 100%;
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  line-height: 1.6;
-  background: #f7f7f7;
-  color: #333;
   display: flex;
-  flex-direction: column; /* 푸터를 하단으로 밀기 위한 flex */
-}
-
-a {
-  text-decoration: none;
-  color: #2a7ae2;
+  flex-direction: column;
+  background: #f7f7f7;
 }
 
 .container {
@@ -23,109 +13,41 @@ a {
   margin: 0 auto;
 }
 
-/* ========================================================
-   헤더
-======================================================== */
 .header {
   background: #2a7ae2;
   color: white;
   padding: 20px 0;
 }
-.header h1 {
-  margin: 0;
-}
-.header nav a {
-  margin-left: 20px;
-  color: white;
-  font-weight: bold;
-}
+.header h1 { margin: 0; }
 
-/* ========================================================
-   메인
-======================================================== */
-.main-content {
-  flex: 1; /* 글이 적어도 footer를 하단으로 밀어주는 핵심 */
-  display: flex;
-  gap: 30px;
-  margin-top: 30px;
-}
+.main-content { flex: 1; display: flex; gap: 30px; margin-top: 30px; }
 
-/* ========================================================
-   게시글 카드 (index.html)
-======================================================== */
-.posts {
-  flex: 2;
-}
-.post-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+.posts { flex: 2; }
+.post-list {}
 .post-card {
   background: white;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  margin-bottom: 15px;
 }
-.post-card:hover {
-  transform: translateY(-3px);
-}
-.post-title {
-  font-size: 1.2rem;
-  font-weight: bold;
+.post-title { font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 5px; }
+.post-date { font-size: 0.9rem; color: #888; margin-bottom: 10px; }
+
+.sidebar .categories ul li button {
   display: block;
-  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+  padding: 5px 0;
+  background: none;
+  border: none;
+  color: #2a7ae2;
+  font-weight: bold;
+  cursor: pointer;
 }
-.post-date {
-  font-size: 0.9rem;
-  color: #888;
-  margin-bottom: 10px;
-}
-.post-summary {
-  font-size: 1rem;
-}
+.sidebar .categories ul li button:hover { color: #1c5bbf; }
 
-/* ========================================================
-   포스트 페이지
-======================================================== */
-.post-article {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
-}
-.post-article img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-/* ========================================================
-   사이드바
-======================================================== */
-.sidebar {
-  flex: 1;
-}
-.sidebar .about,
-.sidebar .categories {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* ========================================================
-   페이지네이션
-======================================================== */
-#pagination {
-  text-align: center;
-  margin-top: 50px;  
-  margin-bottom: 50px; 
-}
-
+#pagination { text-align: center; margin-top: 50px; margin-bottom: 50px; }
 #pagination button {
   padding: 6px 12px;
   margin: 0 5px;
@@ -135,35 +57,13 @@ a {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
 }
-#pagination button:disabled {
-  background: #aaa;
-  cursor: not-allowed;
-}
-#pagination button:hover:not(:disabled) {
-  background: #1c5bbf;
-}
+#pagination button:hover:not(:disabled) { background: #1c5bbf; }
+#pagination button:disabled { background: #aaa; cursor: not-allowed; }
 
-/* ========================================================
-   푸터
-======================================================== */
-.footer {
-  background: #222;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-}
+.footer { background: #222; color: white; text-align: center; padding: 20px 0; }
 
-/* ========================================================
-   반응형
-======================================================== */
-@media screen and (max-width: 768px) {
-  .main-content {
-    flex-direction: column;
-  }
-}
-
+@media screen and (max-width:768px){ .main-content{flex-direction:column;} }
 
 
 
