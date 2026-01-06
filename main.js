@@ -65,7 +65,8 @@ function renderPage(page) {
     card.className = 'post-card';
 
     const title = document.createElement('a');
-    title.href = `post/post-template.html?file=${post.filename}`; // Markdown 파일 링크
+    // GitHub Pages 환경에서도 Markdown 파일 링크 연결
+    title.href = `post/post-template.html?file=${post.filename}`;
     title.className = 'post-title';
     title.textContent = post.title;
 
