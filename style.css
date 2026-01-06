@@ -133,5 +133,27 @@ a {
   }
 }
 
+#pagination button {
+  padding: 6px 12px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  background: #2a7ae2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#pagination button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+#pagination button:hover:not(:disabled) {
+  background: #1c5bbf;
+}
+
+
 
 
