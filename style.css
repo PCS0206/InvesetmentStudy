@@ -22,6 +22,7 @@ html, body {
 
 .main-content { flex: 1; display: flex; gap: 30px; margin-top: 30px; }
 
+/* 게시물 목록 */
 .posts { flex: 2; }
 .post-card {
   background: white;
@@ -30,22 +31,45 @@ html, body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   margin-bottom: 15px;
 }
-.post-title { font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 5px; }
+.post-title { 
+  font-size: 1.2rem; 
+  font-weight: bold; 
+  display: block; 
+  margin-bottom: 5px; 
+  text-decoration: none;
+  color: #333;
+}
+.post-title:hover { color: #2a7ae2; }
 .post-date { font-size: 0.9rem; color: #888; margin-bottom: 10px; }
 
+/* 사이드바 태그 버튼 */
+.sidebar { flex: 1; }
+.sidebar .categories ul { list-style: none; padding: 0; }
+.sidebar .categories ul li { margin-bottom: 5px; }
 .sidebar .categories ul li button {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 5px 0;
+  padding: 8px 12px;
   background: none;
   border: none;
   color: #2a7ae2;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s;
 }
-.sidebar .categories ul li button:hover { color: #1c5bbf; }
+.sidebar .categories ul li button:hover { 
+  background: rgba(42, 122, 226, 0.1); 
+}
 
+/* 태그 활성화 상태 (중요!) */
+.sidebar .categories ul li button.active {
+  background: #2a7ae2;
+  color: white;
+}
+
+/* 페이지네이션 */
 #pagination { text-align: center; margin-top: 50px; margin-bottom: 50px; }
 #pagination button {
   padding: 6px 12px;
@@ -57,9 +81,13 @@ html, body {
   font-weight: bold;
   cursor: pointer;
 }
+#pagination span { font-weight: bold; color: #555; margin: 0 10px; }
 #pagination button:hover:not(:disabled) { background: #1c5bbf; }
 #pagination button:disabled { background: #aaa; cursor: not-allowed; }
 
-.footer { background: #222; color: white; text-align: center; padding: 20px 0; }
+.footer { background: #222; color: white; text-align: center; padding: 20px 0; margin-top: auto; }
 
-@media screen and (max-width:768px){ .main-content{flex-direction:column;} }
+@media screen and (max-width:768px){ 
+  .main-content{ flex-direction: column; } 
+  .sidebar { order: -1; } /* 모바일에서 태그가 위로 오도록 */
+}
