@@ -1,0 +1,10 @@
+post-template.html<script>
+const params = new URLSearchParams(window.location.search);
+const mdFile = params.get('file'); // ?file=2026-01-10-test.md
+
+fetch(mdFile)
+  .then(res=>res.text())
+  .then(md=>{
+    document.getElementById('post-content').innerHTML = marked(md);
+  });
+</script>
