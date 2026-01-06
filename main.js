@@ -1,80 +1,90 @@
 const postList = document.getElementById('post-list');
-const postsPerPage = 7; // 한 페이지당 글 7개
-let currentPage = 1;
-let totalPages = 1;
-let allPosts = [];
-
-// 페이지 버튼 영역
 const paginationContainer = document.createElement('div');
 paginationContainer.id = 'pagination';
-paginationContainer.style.textAlign = 'center';
-paginationContainer.style.marginTop = '20px';
+paginationContainer.style.textAlign='center';
+paginationContainer.style.marginTop='50px';
+paginationContainer.style.marginBottom='50px';
 postList.parentNode.appendChild(paginationContainer);
 
-// 글 로드
-fetch('post/1posts.json')
-  .then(res => res.json())
-  .then(posts => {
-    // 최신순 정렬
-    allPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    totalPages = Math.ceil(allPosts.length / postsPerPage);
-    renderPage(currentPage);
-  })
-  .catch(err => console.error('글 목록 로드 실패:', err));
+const postsPerPage = 7;
+let allPosts = [];
+let filteredPosts = [];
+let currentPage = 1;
+let totalPages = 1;
+let currentTag = '모두';
 
-// 페이지 렌더링 함수
-function renderPage(page) {
-  postList.innerHTML = '';
+// Markdown 글 목록 (파일 경로 = post/파일명.md)
+allPosts = [
+  {filename: "2026-01-10-test.md", title:"오늘의 투자 공부", date:"2026-01-10", tags:["주식","옵션"]},
+  {filename: "2026-01-07-option.md", title:"옵션 전략 정리", date:"2026-01-07", tags:["옵션","전략"]},
+  {filename: "2026-01-05-etf.md", title:"ETF 투자 기초", date:"2026-01-05", tags:["ETF","기초"]}
+];
 
-  const start = (page - 1) * postsPerPage;
-  const end = start + postsPerPage;
-  const pagePosts = allPosts.slice(start, end);
+// 태그 사이드바
+const uniqueTags=["모두","주식","옵션","전략","ETF","기초"];
+const sidebar = document.querySelector('.categories ul');
+uniqueTags.forEach(tag=>{
+  const li=document.createElement('li');
+  const btn=document.createElement('button');
+  btn.textContent=tag;
+  btn.onclick=()=>{currentTag=tag; currentPage=1; filterPosts();};
+  li.appendChild(btn);
+  sidebar.appendChild(li);
+});
 
-  pagePosts.forEach(post => {
-    const card = document.createElement('div');
-    card.className = 'post-card';
+// 필터링 + 페이지네이션
+function filterPosts(){
+  filteredPosts = currentTag==='모두' ? allPosts : allPosts.filter(p=>p.tags.includes(currentTag));
+  totalPages=Math.ceil(filteredPosts.length/postsPerPage);
+  renderPage(currentPage);
+}
 
-    const title = document.createElement('a');
-    title.href = `post/${post.filename}`;
-    title.className = 'post-title';
-    title.textContent = post.title;
+function renderPage(page){
+  postList.innerHTML='';
+  const start=(page-1)*postsPerPage;
+  const end=start+postsPerPage;
+  const pagePosts=filteredPosts.slice(start,end);
 
-    const date = document.createElement('div');
-    date.className = 'post-date';
-    date.textContent = post.date;
+  pagePosts.forEach(post=>{
+    const card=document.createElement('div');
+    card.className='post-card';
 
-    const summary = document.createElement('p');
-    summary.className = 'post-summary';
-    summary.textContent = post.summary;
+    const title=document.createElement('a');
+    title.href=`post/${post.filename.replace('.md','.html')}`;
+    title.className='post-title';
+    title.textContent=post.title;
+
+    const date=document.createElement('div');
+    date.className='post-date';
+    date.textContent=post.date;
 
     card.appendChild(title);
     card.appendChild(date);
-    card.appendChild(summary);
-
     postList.appendChild(card);
   });
 
   renderPagination();
 }
 
-// 페이지네이션 버튼 생성
-function renderPagination() {
-  paginationContainer.innerHTML = '';
+function renderPagination(){
+  paginationContainer.innerHTML='';
+  if(totalPages<=1) return;
 
-  if (totalPages <= 1) return;
+  const prev=document.createElement('button');
+  prev.textContent='이전';
+  prev.disabled=currentPage===1;
+  prev.onclick=()=>{currentPage--; renderPage(currentPage);};
 
-  const prev = document.createElement('button');
-  prev.textContent = '이전';
-  prev.disabled = currentPage === 1;
-  prev.onclick = () => { currentPage--; renderPage(currentPage); };
-
-  const next = document.createElement('button');
-  next.textContent = '다음';
-  next.disabled = currentPage === totalPages;
-  next.onclick = () => { currentPage++; renderPage(currentPage); };
+  const next=document.createElement('button');
+  next.textContent='다음';
+  next.disabled=currentPage===totalPages;
+  next.onclick=()=>{currentPage++; renderPage(currentPage);};
 
   paginationContainer.appendChild(prev);
-  paginationContainer.appendChild(document.createTextNode(`  ${currentPage} / ${totalPages}  `));
+  paginationContainer.appendChild(document.createTextNode(` ${currentPage} / ${totalPages} `));
   paginationContainer.appendChild(next);
 }
+
+// 초기 렌더
+filterPosts();
 
