@@ -12,7 +12,7 @@ paginationContainer.style.marginTop = '20px';
 postList.parentNode.appendChild(paginationContainer);
 
 // 글 로드
-fetch('posts.json')
+fetch('post/1post.json')
   .then(res => res.json())
   .then(posts => {
     // 최신순 정렬
