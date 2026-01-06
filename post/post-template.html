@@ -4,24 +4,36 @@
   <meta charset="UTF-8">
   <title>투자 블로그</title>
   <link rel="stylesheet" href="../style.css">
+  <!-- marked.js 로드 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>투자 블로그</h1>
+  <header class="header">
+    <div class="container">
+      <h1>투자 블로그</h1>
+    </div>
   </header>
 
-  <div class="container">
-    <div id="post-content">Loading...</div>
+  <div class="container main-content">
+    <div class="posts">
+      <!-- Markdown 글 삽입 영역 -->
+      <div id="post-content">Loading...</div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="categories">
+        <h3>태그</h3>
+        <ul></ul>
+      </div>
+    </aside>
   </div>
 
-  <footer>
+  <footer class="footer">
     © 2026 채성. All rights reserved.
   </footer>
 
-  <!-- marked.js 로드 -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
   <script>
+    // URL 쿼리에서 Markdown 파일 이름 가져오기
     const params = new URLSearchParams(window.location.search);
     const mdFile = params.get('file');
 
@@ -32,9 +44,13 @@
           return res.text();
         })
         .then(md => {
-          // Markdown 내용을 스타일 적용 div로 감싸기
-          document.getElementById('post-content').innerHTML = 
-            `<div class="markdown-body">${marked.parse(md)}</div>`;
+          // Markdown 변환 후 기존 디자인 유지
+          const postContent = document.getElementById('post-content');
+          postContent.innerHTML = marked.parse(md);
+
+          // 모든 h1, h2, p 등 텍스트를 post-card 스타일로 감싸기
+          // optional: 카드 스타일 그대로 적용
+          postContent.classList.add('post-card');
         })
         .catch(err => {
           console.error(err);
@@ -46,3 +62,4 @@
   </script>
 </body>
 </html>
+
